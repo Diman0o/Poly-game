@@ -4,11 +4,18 @@ using UnityEngine;
 
 public class LevelLoader : MonoBehaviour
 {
-    public Color myColor;
-    public Vector3 v0;
-    public Vector3 v1;
-    public Vector3 v2;
-    public static Mesh Triangle(Vector3 vertex0, Vector3 vertex1, Vector3 vertex2)
+    private static Vector3 targetPoint;
+    public Color myColor1;
+    public Color myColor2;
+
+    public Vector3 v1_0;
+    public Vector3 v1_1;
+    public Vector3 v1_2;
+
+    public Vector3 v2_0;
+    public Vector3 v2_1;
+    public Vector3 v2_2;
+    public static Mesh CreateTriangle(Vector3 vertex0, Vector3 vertex1, Vector3 vertex2)
     {
         var normal = Vector3.Cross((vertex1 - vertex0), (vertex2 - vertex0)).normalized;
         var mesh = new Mesh
@@ -22,31 +29,39 @@ public class LevelLoader : MonoBehaviour
         return mesh;
     }
 
-    public static void CreateTriangle(Vector3 vertex0, Vector3 vertex1, Vector3 vertex2, Color triangleColor)
+    public static void DrawTriangle(Vector3 vertex0, Vector3 vertex1, Vector3 vertex2, Color triangleColor)
     {
 
         GameObject gameObject = new GameObject("Mesh", typeof(MeshFilter), typeof(MeshRenderer));
-        //gameObject.transform.localScale = new Vector3(1, 1, 1);
         GameObject gameObjectBack = new GameObject("Mesh", typeof(MeshFilter), typeof(MeshRenderer));
-        //gameObjectBack.transform.localScale = new Vector3(1, 1, 1);
 
-        gameObject.GetComponent<MeshFilter>().mesh = Triangle(vertex0, vertex1, vertex2);
+        gameObject.GetComponent<MeshFilter>().mesh = CreateTriangle(vertex0, vertex1, vertex2);
         gameObject.GetComponent<MeshRenderer>().material.color = triangleColor;
-        gameObjectBack.GetComponent<MeshFilter>().mesh = Triangle(vertex2, vertex1, vertex0);
+        gameObjectBack.GetComponent<MeshFilter>().mesh = CreateTriangle(vertex2, vertex1, vertex0);
         gameObjectBack.GetComponent<MeshRenderer>().material.color = triangleColor;
     }
+
+    public static Vector3 TransformPoint(Vector3 vertex, float moveCoef)
+    {
+        Vector3 transformedVertex = vertex + ((vertex - targetPoint) * moveCoef);
+        return transformedVertex;
+    }
+
     // Start is called before the first frame update
     void Start()
     {
+        targetPoint = new Vector3(0, 0, CameraRotationAround.zoom);
 
-        v0 = new Vector3(-1, -1, 0);
-        v1 = new Vector3(0, 1, 0);
-        v2 = new Vector3(1, -1, 2);
+        List<TriangleData> triangleDatas = DataReader.ReadLevel();
 
-        myColor = new Color(0.3f, 0.5f, 0);
-
-        CreateTriangle(v0, v1, v2, myColor);
-
+        foreach (var triangleData in triangleDatas)
+        {
+            DrawTriangle(
+                TransformPoint(triangleData.a, triangleData.aMoveCoef),
+                TransformPoint(triangleData.b, triangleData.bMoveCoef),
+                TransformPoint(triangleData.c, triangleData.cMoveCoef),
+                triangleData.color);
+        }
     }
 
     // Update is called once per frame

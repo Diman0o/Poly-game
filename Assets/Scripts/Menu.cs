@@ -12,8 +12,6 @@ public class Menu : MonoBehaviour
     [SerializeField]
     private GameObject _panelSettings;
 
-    private int _gameSceneBuildIndex = 1;
-
     public void OpenLevels()
     {
         PanelsManager.panelMainMenuIsActive = false;
@@ -23,11 +21,6 @@ public class Menu : MonoBehaviour
     {
         PanelsManager.panelMainMenuIsActive = true;
         PanelsManager.panelLevelsIsActive = false;
-    }
-
-    public void PlayGame()
-    {
-        SceneManager.LoadScene(_gameSceneBuildIndex);
     }
 
     public void OpenSettings()

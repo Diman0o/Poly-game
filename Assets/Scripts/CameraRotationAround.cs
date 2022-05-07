@@ -8,13 +8,13 @@ public class CameraRotationAround : MonoBehaviour
 	public Vector3 pointOfView;
 	public Vector3 offset;
 	public float sensitivity = 3;
-	public float zoom = 5;
+	public static float zoom = -10;
 
 	void Start()
 	{
 		currentEulerAngles = new Vector3(0, 0, 0);
 		pointOfView = new Vector3(0, 0, 0);
-		offset = new Vector3(offset.x, offset.y, -zoom / 2);
+		offset = new Vector3(offset.x, offset.y, zoom);
 		transform.position = pointOfView + offset;
 	}
 
