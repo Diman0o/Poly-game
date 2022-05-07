@@ -4,17 +4,8 @@ using UnityEngine;
 
 public class LevelLoader : MonoBehaviour
 {
+    public static Vector3 startRotation;
     private static Vector3 targetPoint;
-    public Color myColor1;
-    public Color myColor2;
-
-    public Vector3 v1_0;
-    public Vector3 v1_1;
-    public Vector3 v1_2;
-
-    public Vector3 v2_0;
-    public Vector3 v2_1;
-    public Vector3 v2_2;
     public static Mesh CreateTriangle(Vector3 vertex0, Vector3 vertex1, Vector3 vertex2)
     {
         var normal = Vector3.Cross((vertex1 - vertex0), (vertex2 - vertex0)).normalized;
@@ -52,7 +43,10 @@ public class LevelLoader : MonoBehaviour
     {
         targetPoint = new Vector3(0, 0, CameraRotationAround.zoom);
 
-        List<TriangleData> triangleDatas = DataReader.ReadLevel();
+        LevelData levelData = DataReader.ReadLevel();
+        startRotation = levelData.startRotation;
+        Debug.Log($"LevelLoader: {startRotation}");
+        List<TriangleData> triangleDatas = levelData.triangleDatas;
 
         foreach (var triangleData in triangleDatas)
         {

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using System.Globalization;
 
 public class LevelsButtonsManager : MonoBehaviour
 {
@@ -16,6 +17,13 @@ public class LevelsButtonsManager : MonoBehaviour
     {
         textLevelNumber = GetComponent<Text>();
         levelNumber = textLevelNumber.text;
+        SceneManager.LoadScene(_gameSceneBuildIndex);
+    }
+
+    public void PlayNextLevelGame()
+    {
+        int intLevelNumber = int.Parse(levelNumber, CultureInfo.InvariantCulture.NumberFormat) + 1;
+        levelNumber = intLevelNumber.ToString();
         SceneManager.LoadScene(_gameSceneBuildIndex);
     }
 

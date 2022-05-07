@@ -4,6 +4,19 @@ using System.Collections.Generic;
 using System.Globalization;
 using UnityEngine;
 
+public class LevelData
+{
+    public Vector3 startRotation;
+    public List<TriangleData> triangleDatas;
+
+    public LevelData(
+        Vector3 startRotation,
+        List<TriangleData> triangleDatas)
+    {
+        this.startRotation = startRotation;
+        this.triangleDatas = triangleDatas;
+    }
+}
 public class TriangleData
 {
     public Vector3 a, b, c;
@@ -36,15 +49,34 @@ public class TriangleData
 public class DataReader
 {
     // Start is called before the first frame update
-    public static List<TriangleData> ReadLevel()
+    public static LevelData ReadLevel()
     {
-        List <TriangleData> triangeDatas = new List<TriangleData>();
+        Vector3 startRotation;
         string fileName = "level" + LevelsButtonsManager.levelNumber;
-        Debug.Log(fileName);
         TextAsset mytxtData = (TextAsset)Resources.Load(fileName);
         string text = mytxtData.text;
         string[] lines = text.Split("\n");
-        foreach (string line in lines) {
+        return new LevelData(
+            parseFirstLine(lines[0]),
+            parseTriangles(lines));
+    }
+
+    static Vector3 parseFirstLine(string firstLine)
+    {
+        string[] startRotationStrings = firstLine.Split(",");
+        return new Vector3(
+            float.Parse(startRotationStrings[0], CultureInfo.InvariantCulture.NumberFormat),
+            float.Parse(startRotationStrings[1], CultureInfo.InvariantCulture.NumberFormat),
+            float.Parse(startRotationStrings[2], CultureInfo.InvariantCulture.NumberFormat));
+    }
+
+    static List<TriangleData> parseTriangles(string[] lines)
+    {
+        List<TriangleData> triangleDatas = new List<TriangleData>();
+
+        for (int i = 1; i < lines.Length; i++)
+        {
+            string line = lines[i];
             string[] lineComponents = line.Split(",");
             TriangleData data = new TriangleData(
                 float.Parse(lineComponents[0], CultureInfo.InvariantCulture.NumberFormat),
@@ -62,8 +94,8 @@ public class DataReader
                 float.Parse(lineComponents[12], CultureInfo.InvariantCulture.NumberFormat),
                 float.Parse(lineComponents[13], CultureInfo.InvariantCulture.NumberFormat),
                 float.Parse(lineComponents[14], CultureInfo.InvariantCulture.NumberFormat));
-            triangeDatas.Add(data);
+            triangleDatas.Add(data);
         }
-        return triangeDatas;
+        return triangleDatas;
     }
 }

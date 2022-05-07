@@ -280,6 +280,7 @@ GameObject:
   - component: {fileID: 460012921}
   - component: {fileID: 460012920}
   - component: {fileID: 460012924}
+  - component: {fileID: 460012925}
   m_Layer: 5
   m_Name: Canvas
   m_TagString: Untagged
@@ -384,6 +385,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _panelGame: {fileID: 212036648}
   _panelEndGame: {fileID: 483861719}
+--- !u!114 &460012925
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 460012919}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 915ab71f3a6f3b94bbe562a2019ffd32, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  textLevelNumber: {fileID: 0}
 --- !u!1 &483861719
 GameObject:
   m_ObjectHideFlags: 0
@@ -701,8 +715,8 @@ GameObject:
   - component: {fileID: 1374148178}
   - component: {fileID: 1374148177}
   - component: {fileID: 1374148176}
-  - component: {fileID: 1374148179}
   - component: {fileID: 1374148180}
+  - component: {fileID: 1374148181}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -776,22 +790,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1374148179
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1374148175}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b16e127cbb175354c803e82bda0df5c2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  currentEulerAngles: {x: 0, y: 0, z: 0}
-  pointOfView: {x: 0, y: 0, z: 0}
-  offset: {x: 0, y: 0, z: 0}
-  sensitivity: 3
 --- !u!114 &1374148180
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -804,14 +802,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4bfcc3822e748af43a686012d0b781c5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  myColor1: {r: 0, g: 0, b: 0, a: 0}
-  myColor2: {r: 0, g: 0, b: 0, a: 0}
-  v1_0: {x: 0, y: 0, z: 0}
-  v1_1: {x: 0, y: 0, z: 0}
-  v1_2: {x: 0, y: 0, z: 0}
-  v2_0: {x: 0, y: 0, z: 0}
-  v2_1: {x: 0, y: 0, z: 0}
-  v2_2: {x: 0, y: 0, z: 0}
+--- !u!114 &1374148181
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1374148175}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b16e127cbb175354c803e82bda0df5c2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  center: {x: 0, y: 0, z: 0}
+  offset: {x: 0, y: 0, z: 0}
+  sensitivity: 3
 --- !u!1 &1451534275
 GameObject:
   m_ObjectHideFlags: 0
@@ -1027,7 +1032,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1542907972}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 460012925}
+        m_TargetAssemblyTypeName: LevelsButtonsManager, Assembly-CSharp
+        m_MethodName: PlayNextLevelGame
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1542907972
 MonoBehaviour:
   m_ObjectHideFlags: 0

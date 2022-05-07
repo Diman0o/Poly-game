@@ -206,7 +206,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 32171403}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1958300082}
+        m_TargetAssemblyTypeName: LevelsButtonsManager, Assembly-CSharp
+        m_MethodName: PlayGame
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &32171403
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3755,9 +3767,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: '2
-
-'
+  m_Text: 2
 --- !u!222 &1474637026
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -4553,6 +4563,7 @@ GameObject:
   - component: {fileID: 1958300079}
   - component: {fileID: 1958300081}
   - component: {fileID: 1958300080}
+  - component: {fileID: 1958300082}
   m_Layer: 5
   m_Name: 1
   m_TagString: Untagged
@@ -4622,6 +4633,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1958300078}
   m_CullTransparentMesh: 1
+--- !u!114 &1958300082
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1958300078}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 915ab71f3a6f3b94bbe562a2019ffd32, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  textLevelNumber: {fileID: 1958300080}
 --- !u!1 &1987936946
 GameObject:
   m_ObjectHideFlags: 0

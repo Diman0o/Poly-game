@@ -4,18 +4,19 @@ using UnityEngine;
 
 public class CameraRotationAround : MonoBehaviour
 {
-	public Vector3 currentEulerAngles;
-	public Vector3 pointOfView;
+	static public Vector3 currentEulerAngles;
+	public Vector3 center;
 	public Vector3 offset;
 	public float sensitivity = 3;
 	public static float zoom = -10;
 
 	void Start()
 	{
-		currentEulerAngles = new Vector3(0, 0, 0);
-		pointOfView = new Vector3(0, 0, 0);
+		currentEulerAngles = LevelLoader.startRotation;
+		center = new Vector3(0, 0, 0);
 		offset = new Vector3(offset.x, offset.y, zoom);
-		transform.position = pointOfView + offset;
+		transform.position = center + offset;
+		Update();
 	}
 
 	void Update()
@@ -24,9 +25,10 @@ public class CameraRotationAround : MonoBehaviour
         {
 			currentEulerAngles.x = currentEulerAngles.x + Input.GetAxis("Mouse X") * sensitivity;
 			currentEulerAngles.y = currentEulerAngles.y + Input.GetAxis("Mouse Y") * sensitivity;
-			transform.localEulerAngles = new Vector3(-currentEulerAngles.y, currentEulerAngles.x, 0);
-			transform.position = transform.localRotation * offset + pointOfView;
+
 		}
+		transform.localEulerAngles = new Vector3(-currentEulerAngles.y, currentEulerAngles.x, 0);
+		transform.position = transform.localRotation * offset + center;
 	}
 
 }
