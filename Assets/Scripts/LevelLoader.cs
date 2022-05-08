@@ -45,7 +45,6 @@ public class LevelLoader : MonoBehaviour
 
         LevelData levelData = DataReader.ReadLevel();
         startRotation = levelData.startRotation;
-        Debug.Log($"LevelLoader: {startRotation}");
         List<TriangleData> triangleDatas = levelData.triangleDatas;
 
         foreach (var triangleData in triangleDatas)

@@ -17,6 +17,8 @@ public class LevelsButtonsManager : MonoBehaviour
     {
         textLevelNumber = GetComponent<Text>();
         levelNumber = textLevelNumber.text;
+        PanelsManager.panelGameIsActive = true;
+        PanelsManager.panelEndGameIsActive = false;
         SceneManager.LoadScene(_gameSceneBuildIndex);
     }
 
@@ -24,6 +26,8 @@ public class LevelsButtonsManager : MonoBehaviour
     {
         int intLevelNumber = int.Parse(levelNumber, CultureInfo.InvariantCulture.NumberFormat) + 1;
         levelNumber = intLevelNumber.ToString();
+        PanelsManager.panelGameIsActive = true;
+        PanelsManager.panelEndGameIsActive = false;
         SceneManager.LoadScene(_gameSceneBuildIndex);
     }
 

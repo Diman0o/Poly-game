@@ -12,25 +12,38 @@ public class Menu : MonoBehaviour
     [SerializeField]
     private GameObject _panelSettings;
 
+    public void Start()
+    {
+        _panelMainMenu.SetActive(PanelsManager.panelMainMenuIsActive);
+        _panelLevels.SetActive(PanelsManager.panelLevelsIsActive);
+        _panelSettings.SetActive(false);
+    }
+
     public void OpenLevels()
     {
         PanelsManager.panelMainMenuIsActive = false;
+        _panelMainMenu.SetActive(PanelsManager.panelMainMenuIsActive);
         PanelsManager.panelLevelsIsActive = true;
+        _panelLevels.SetActive(PanelsManager.panelLevelsIsActive);
     }
     public void CloseLevels()
     {
         PanelsManager.panelMainMenuIsActive = true;
+        _panelMainMenu.SetActive(PanelsManager.panelMainMenuIsActive);
         PanelsManager.panelLevelsIsActive = false;
+        _panelLevels.SetActive(PanelsManager.panelLevelsIsActive);
     }
 
     public void OpenSettings()
     {
         _panelSettings.SetActive(true);
         PanelsManager.panelMainMenuIsActive = false;
+        _panelMainMenu.SetActive(PanelsManager.panelMainMenuIsActive);
     }
     public void CloseSettings()
     {
         PanelsManager.panelMainMenuIsActive = true;
+        _panelMainMenu.SetActive(PanelsManager.panelMainMenuIsActive);
         _panelSettings.SetActive(false);
     }
 
@@ -45,16 +58,6 @@ public class Menu : MonoBehaviour
 
     private void Update()
     {
-        if (PanelsManager.panelMainMenuIsActive)
-        {
-            _panelMainMenu.SetActive(true);
-        }
-        else _panelMainMenu.SetActive(false);
-
-        if (PanelsManager.panelLevelsIsActive)
-        {
-            _panelLevels.SetActive(true);
-        }
-        else _panelLevels.SetActive(false);
+        
     }
 }
