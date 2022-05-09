@@ -11,12 +11,49 @@ public class Menu : MonoBehaviour
     private GameObject _panelLevels;
     [SerializeField]
     private GameObject _panelSettings;
+    [SerializeField]
+    private GameObject _panelLogInAndSignUp;
+ 
+    private string requestType = "";
 
     public void Start()
     {
         _panelMainMenu.SetActive(PanelsManager.panelMainMenuIsActive);
         _panelLevels.SetActive(PanelsManager.panelLevelsIsActive);
         _panelSettings.SetActive(false);
+    }
+
+    public void OnLogInPressed()
+    {
+        requestType = "auth";
+        OpenLogInAndSignUp();
+    }
+
+    public void OnSignUpPressed()
+    {
+        requestType = "register";
+        OpenLogInAndSignUp();
+
+    }
+
+    public void OpenLogInAndSignUp()
+    {
+        _panelSettings.SetActive(false);
+        _panelLogInAndSignUp.SetActive(true);
+    }
+
+    public void OnOkPressed()
+    {
+        //TODO: fetch login and password from input fields
+        string[][] queryParams = new string[][] { new string[] {"login", }, new string[] {"password", } };
+        StartCoroutine(WebRequest.ProcessRequest(requestType, queryParams, AccountData.setAccountId));
+        CloseLogInAndSignUp();
+    }
+
+    public void CloseLogInAndSignUp()
+    {
+        _panelSettings.SetActive(true);
+        _panelLogInAndSignUp.SetActive(false);
     }
 
     public void OpenLevels()
