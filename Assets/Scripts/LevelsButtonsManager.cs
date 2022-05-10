@@ -30,15 +30,4 @@ public class LevelsButtonsManager : MonoBehaviour
         PanelsManager.panelEndGameIsActive = false;
         SceneManager.LoadScene(_gameSceneBuildIndex);
     }
-
-    void Start()
-    {
-       
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 }

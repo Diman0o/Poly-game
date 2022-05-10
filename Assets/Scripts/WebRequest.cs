@@ -18,13 +18,16 @@ public class WebRequest
         List<string> queryParamsPairs = new List<string>();
         foreach (string[] queryParamPair in queryParams)
         {
+            Debug.Log($"queryParams: {queryParamPair}");
+
             string paramName = queryParamPair[0];
             string paramValue = queryParamPair[1];
             queryParamsPairs.Add(paramName + "=" + paramValue);
         }
         string queryParamsString = string.Join("&", queryParamsPairs);
         string delimiter = string.IsNullOrWhiteSpace(queryParamsString) ? "" : "?";
-        string uri = host + path + "?" + delimiter + queryParamsString;
+        string uri = host + path + delimiter + queryParamsString;
+        Debug.Log(uri);
 
         using (UnityWebRequest webRequest = UnityWebRequest.Get(uri))
         {
@@ -41,7 +44,7 @@ public class WebRequest
                     Debug.LogError(": HTTP Error: " + webRequest.error);
                     break;
                 case UnityWebRequest.Result.Success:
-                    handleResult(webRequest.downloadHandler.text);
+                    handleResult(webRequest.downloadHandler.text.Trim('"'));
                     break;
             }
         }

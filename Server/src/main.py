@@ -38,9 +38,9 @@ def login(login: str = "", password: str = "", db: Session = Depends(get_db)):
     auth = db.query(Auth).filter(Auth.login == login).first()
     hash = hashlib.sha256((salt + password).encode('utf-8')).hexdigest()
     if hash == auth.hash:
-        return auth.innerId
+        return auth.login + "," + auth.innerId
     else:
-        return ""
+        return "ERROR"
 
 
 @app.get("/pass_level/")

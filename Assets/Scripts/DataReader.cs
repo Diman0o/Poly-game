@@ -27,8 +27,8 @@ public class TriangleData
         float ax, float ay, float az,
         float bx, float by, float bz,
         float cx, float cy, float cz,
-        float aMoveCoef, float bMoveCoef,
-        float cMoveCoef, float colorR, float colorG, float colorB)
+        float colorR, float colorG, float colorB,
+        float aMoveCoef, float bMoveCoef, float cMoveCoef)
     {
         a.x = ax;
         a.y = ay;
@@ -39,11 +39,10 @@ public class TriangleData
         c.x = cx;
         c.y = cy;
         c.z = cz;
+        color = new Color(colorR, colorG, colorB);
         this.aMoveCoef = aMoveCoef;
         this.bMoveCoef = bMoveCoef;
         this.cMoveCoef = cMoveCoef;
-        color = new Color(colorR, colorG, colorB);
-
     }
 }
 public class DataReader
@@ -51,7 +50,6 @@ public class DataReader
     // Start is called before the first frame update
     public static LevelData ReadLevel()
     {
-        Vector3 startRotation;
         string fileName = "level" + LevelsButtonsManager.levelNumber;
         TextAsset mytxtData = (TextAsset)Resources.Load(fileName);
         string text = mytxtData.text;
@@ -77,7 +75,13 @@ public class DataReader
         for (int i = 1; i < lines.Length; i++)
         {
             string line = lines[i];
+            Debug.Log(line);
             string[] lineComponents = line.Split(",");
+            foreach (var n in lineComponents)
+            {
+                Debug.Log(n);
+                float.Parse(n, CultureInfo.InvariantCulture.NumberFormat);
+            }
             TriangleData data = new TriangleData(
                 float.Parse(lineComponents[0], CultureInfo.InvariantCulture.NumberFormat),
                 float.Parse(lineComponents[1], CultureInfo.InvariantCulture.NumberFormat),

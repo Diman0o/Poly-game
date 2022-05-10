@@ -17,14 +17,14 @@ public class CameraRotationAround : MonoBehaviour
 	public Vector3 center;
 	public Vector3 offset;
 	public float sensitivity = 3;
-	public static float zoom = -16;
+	public static float zoom = -80;
 
 	void Start()
 	{
 		isLevelPassed = false;
 		isMoveAnimationPlayed = false;
 		isRotateAnimationPlayed = false;
-		animationSpeed = 0.001f;
+		animationSpeed = 0.01f;
 
 
 		_panelGame.SetActive(PanelsManager.panelGameIsActive);
