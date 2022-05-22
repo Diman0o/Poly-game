@@ -52,6 +52,12 @@ public class CameraRotationAround : MonoBehaviour
 
 		if (!isLevelPassed && distanceToWin < 1) //0.1
         {
+			if (!string.IsNullOrWhiteSpace(DataStorer.accountId))
+            {
+				string[][] queryParams = new string[][] { new string[] { "accountId", DataStorer.accountId }, new string[] { "levelName", LevelsButtonsManager.levelNumber} };
+				StartCoroutine(WebRequest.ProcessRequest("pass_level", queryParams, DataStorer.processSaveLevelAsPastOnServer));
+			}
+			DataStorer.saveLevelAsPast(LevelsButtonsManager.levelNumber); 
 			isLevelPassed = true;
 			PanelsManager.panelGameIsActive = false;
 			_panelGame.SetActive(PanelsManager.panelGameIsActive);
@@ -98,7 +104,6 @@ public class CameraRotationAround : MonoBehaviour
 			float r = Mathf.Abs(zoom);
 			float t = r / Mathf.Sqrt(Mathf.Pow(directionPoint.x, 2) + Mathf.Pow(directionPoint.y, 2) + Mathf.Pow(directionPoint.z, 2)); //For optimization reazons possible to change sqrt that using fast inverse square root https://en.wikipedia.org/wiki/Fast_inverse_square_root 
 			Vector3 pointOnSphereLocatedInDirection = directionPoint * t;
-			Debug.Log($"move to: {pointOnSphereLocatedInDirection}, directionPoint: {directionPoint}, t: {t}, old_position: {transform.position}");
 			transform.position = pointOnSphereLocatedInDirection;
 			if (calcDistance(transform.position, offset) < 0.001)
 			{
@@ -119,7 +124,6 @@ public class CameraRotationAround : MonoBehaviour
 				Mathf.Pow(worldUp.y - cameraUp.y, 2) +
 				Mathf.Pow(worldUp.z - cameraUp.z, 2);
 			Vector3 newCameraUp = cameraUp + (worldUp - cameraUp) * animationSpeed;
-			Debug.Log($"rotate to: {newCameraUp}, old camera up: {transform.position}, camera diff: {cameraDiff}");
 			transform.LookAt(center, newCameraUp);
 			if (cameraDiff < 0.001)
 			{

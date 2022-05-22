@@ -75,11 +75,9 @@ public class DataReader
         for (int i = 1; i < lines.Length; i++)
         {
             string line = lines[i];
-            Debug.Log(line);
             string[] lineComponents = line.Split(",");
             foreach (var n in lineComponents)
             {
-                Debug.Log(n);
                 float.Parse(n, CultureInfo.InvariantCulture.NumberFormat);
             }
             TriangleData data = new TriangleData(

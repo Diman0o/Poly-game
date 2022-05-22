@@ -24,10 +24,10 @@ public class Menu : MonoBehaviour
 
     private string requestType = "";
 
-    public static string accountId;
-
     public void Start()
     {
+        DataStorer.updateLevelButtons();
+        login.text = DataStorer.login;
         _panelMainMenu.SetActive(PanelsManager.panelMainMenuIsActive);
         _panelLevels.SetActive(PanelsManager.panelLevelsIsActive);
         _panelSettings.SetActive(PanelsManager.panelSettingsIsActive);
@@ -76,7 +76,6 @@ public class Menu : MonoBehaviour
 
         StartCoroutine(WebRequest.ProcessRequest(requestType, queryParams, requestResultHandler));
         signUpAndLogInState.text = "Обрабатывается...";
-        //CloseLogInAndSignUp();
     }
 
     public void CloseLogInAndSignUp()
@@ -93,6 +92,7 @@ public class Menu : MonoBehaviour
         _panelMainMenu.SetActive(PanelsManager.panelMainMenuIsActive);
         PanelsManager.panelLevelsIsActive = true;
         _panelLevels.SetActive(PanelsManager.panelLevelsIsActive);
+        DataStorer.updateLevelButtons();
     }
     public void CloseLevels()
     {
@@ -128,6 +128,7 @@ public class Menu : MonoBehaviour
 
     private void Update()
     {
+        Debug.Log($"login: ${login.text}");
         
     }
 
@@ -135,7 +136,7 @@ public class Menu : MonoBehaviour
     {
         if (authResult == "ERROR")
         {
-            accountId = "";
+            DataStorer.accountId = "";
             if (signUpAndLogInState.text == "Обрабатывается...")
             {
                 signUpAndLogInState.text = "Ошибка, попробуйте снова";
@@ -144,8 +145,9 @@ public class Menu : MonoBehaviour
         else
         {
             string[] result = authResult.Split(",");
-            login.text = result[0];
-            accountId = result[1];
+            DataStorer.login = result[0];
+            DataStorer.accountId = result[1];
+            login.text = DataStorer.login;
             if (signUpAndLogInState.text == "Обрабатывается...")
             {
                 PanelsManager.panelSettingsIsActive = true;
@@ -153,6 +155,11 @@ public class Menu : MonoBehaviour
                 PanelsManager.panelLogInAndSignUpIsActive = false;
                 _panelLogInAndSignUp.SetActive(PanelsManager.panelLogInAndSignUpIsActive);
             }
+
+            DataStorer.clear();
+
+            string[][] queryParams = new string[][] { new string[] { "accountId", DataStorer.accountId}};
+            StartCoroutine(WebRequest.ProcessRequest("get_passed_levels", queryParams, handleGetPassedLevelsResult));
         }
     }
 
@@ -174,6 +181,16 @@ public class Menu : MonoBehaviour
                 signUpAndLogInState.text = "Ошибка, попробуйте снова";
                 Debug.Log("Handling register result");
             }
+        }
+    }
+
+    public void handleGetPassedLevelsResult(string result)
+    {
+        Debug.Log($"Handling getPassedLevels result = {result}");
+        string[] passedLevels = result.Split(",");
+        foreach (string passedLevel in passedLevels)
+        {
+            DataStorer.saveLevelAsPast(passedLevel.Trim());
         }
     }
 }

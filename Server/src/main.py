@@ -58,6 +58,7 @@ def pass_level(accountId: str = "", levelName = "", db: Session = Depends(get_db
 def get_passed_levels(accountId: str = "", db: Session = Depends(get_db)):
     dbEntries = db.query(LevelPass).filter(LevelPass.accountId == accountId).all()
     levelNames = map(lambda dbEntry: dbEntry.levelName, dbEntries)
+    print(levelNames)
     return ",".join(levelNames)
 
 
