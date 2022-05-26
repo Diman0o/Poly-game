@@ -16,6 +16,11 @@ public class Menu : MonoBehaviour
     [SerializeField]
     public GameObject _panelLogInAndSignUp;
 
+    [SerializeField]
+    private GameObject _panelCustomLevels;
+    [SerializeField]
+    private GameObject _panelAddCustomLevel;
+
     public InputField loginInputField;
     public InputField passwordInputField;
 
@@ -62,7 +67,6 @@ public class Menu : MonoBehaviour
     {
         string login = loginInputField.text;
         string password = passwordInputField.text;
-        Debug.Log($"Login: {login}, password: {password}, request: {requestType}");
         string[][] queryParams = new string[][] { new string[] {"login", login}, new string[] {"password", password} };
         Action<string> requestResultHandler;
         if (requestType == "login")
@@ -117,6 +121,31 @@ public class Menu : MonoBehaviour
         _panelSettings.SetActive(PanelsManager.panelSettingsIsActive);
     }
 
+    public void OpenLibrary()
+    {
+        _panelCustomLevels.SetActive(true);
+        PanelsManager.panelMainMenuIsActive = false;
+        _panelMainMenu.SetActive(PanelsManager.panelMainMenuIsActive);
+    }
+    public void CloseLibrary()
+    {
+        PanelsManager.panelMainMenuIsActive = true;
+        _panelMainMenu.SetActive(PanelsManager.panelMainMenuIsActive);
+        _panelCustomLevels.SetActive(false);
+    }
+
+    public void OpenAddCustomLevel()
+    {
+        _panelAddCustomLevel.SetActive(true);
+        _panelCustomLevels.SetActive(false);
+    }
+    public void CloseAddCustomLevel()
+    {
+        _panelCustomLevels.SetActive(true);
+        _panelAddCustomLevel.SetActive(false);
+    }
+
+
     public void ExitGame()
     {
         #if UNITY_EDITOR
@@ -128,8 +157,6 @@ public class Menu : MonoBehaviour
 
     private void Update()
     {
-        Debug.Log($"login: ${login.text}");
-        
     }
 
     public void handleAuthResult(string authResult)

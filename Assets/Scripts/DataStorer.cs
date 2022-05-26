@@ -6,8 +6,9 @@ using UnityEngine.UI;
 public class DataStorer
 {
     public static string login = "";
-    public static string accountId = ""; //Do not save it in PlayersPrefs, it is unsave
+    public static string accountId = ""; //Do not save it in PlayersPrefs, it is unsafe
     public static string levelDataPrefix = "levelData_";
+    public static IDictionary<string, GameObject> levelPreviewImages;
     public static void saveLevelAsPast(string levelId)
     {
         PlayerPrefs.SetInt(levelDataPrefix + levelId, 1);
@@ -36,29 +37,54 @@ public class DataStorer
 
     public static void updateLevelButtons()
     {
-        Color notPassedColor = new Color(108.0f / 255.0f, 75.0f / 255.0f, 154.0f / 255.0f);
-        Color passedColor = new Color(80.0f / 255.0f, 180.0f / 255.0f, 25.0f / 255.0f);
+        //var levelsContent = GameObject.FindGameObjectWithTag("LevelsContent");
+        Sprite notPassedSprite = Resources.Load<Sprite>("Previews/QuestionMark");
 
         var levels = GameObject.FindGameObjectsWithTag("Level");
         foreach (var level in levels)
         {
             string levelId = level.GetComponentInChildren<Text>().text;
             var image = level.GetComponent<Image>();
-            Debug.Log($"Checking level passed, id: {levelId}, old_color: {image.color}");
+            Image preview = getPreviewImage(level, image);
+            Debug.Log($"Laevelname: {level.name}");
             if (isLevelPast(levelId))
             {
-                Debug.Log($"Checking level passed, id: {levelId}, result is past, new_color: {level.GetComponent<Image>().color}");
-
-                level.GetComponent<Image>().color = passedColor;
+                Sprite passedSprite = getPassedSprite(level.name);
+                preview.sprite = passedSprite;
             }
             else
             {
-                level.GetComponent<Image>().color = notPassedColor;
+                preview.sprite = notPassedSprite;
+            }
 
-                Debug.Log($"Checking level passed, id: {levelId}, result is not past, new_color: {level.GetComponent<Image>().color}");
+            //var newLevel = GameObject.Instantiate(level);
+            //newLevel.transform.parent = levelsContent.transform;
+        }
+    }
 
+    private static Image getPreviewImage(GameObject level, Image levelImage)
+    {
+        Image[] previews = level.GetComponentsInChildren<Image>();
+        foreach (var preview in previews)
+        {
+            if (preview != levelImage)
+            {
+                return preview;
             }
         }
+
+        throw new System.ArgumentException("Preview not found");
+    }
+
+    private static Sprite getPassedSprite(string name)
+    {
+        Sprite passedSprite = Resources.Load<Sprite>($"Previews/{name}");
+        if (passedSprite != null)
+        {
+            Debug.Log("NOT NULL");
+            return passedSprite;
+        }
+        return Resources.Load<Sprite>("Previews/DonePreview");
     }
 
     public static void processSaveLevelAsPastOnServer(string result)

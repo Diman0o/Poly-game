@@ -53,6 +53,11 @@ public class DataReader
         string fileName = "level" + LevelsButtonsManager.levelNumber;
         TextAsset mytxtData = (TextAsset)Resources.Load(fileName);
         string text = mytxtData.text;
+        return ParseTextToLevelData(text);
+    }
+
+    public static LevelData ParseTextToLevelData(string text)
+    {
         string[] lines = text.Split("\n");
         return new LevelData(
             parseFirstLine(lines[0]),

@@ -26,12 +26,19 @@ public class LevelLoader : MonoBehaviour
         GameObject gameObject = new GameObject("Mesh", typeof(MeshFilter), typeof(MeshRenderer));
         GameObject gameObjectBack = new GameObject("Mesh", typeof(MeshFilter), typeof(MeshRenderer));
 
+        int TrianglesLayer = LayerMask.NameToLayer("Triangles");
+        Shader shader = Shader.Find("UI/Default");
+
         gameObject.GetComponent<MeshFilter>().mesh = CreateTriangle(vertex0, vertex1, vertex2);
-        //gameObject.GetComponent<MeshRenderer>().material = new Material(Shader.Find("Specular")); //Set default shader to used material
         gameObject.GetComponent<MeshRenderer>().material.color = triangleColor;
-        //gameObjectBack.GetComponent<MeshRenderer>().material = new Material(Shader.Find("Specular")); //Set default shader to used material
+        gameObject.GetComponent<MeshRenderer>().material.shader = shader;
+        gameObject.layer = TrianglesLayer;
+
         gameObjectBack.GetComponent<MeshFilter>().mesh = CreateTriangle(vertex2, vertex1, vertex0);
         gameObjectBack.GetComponent<MeshRenderer>().material.color = triangleColor;
+        gameObjectBack.GetComponent<MeshRenderer>().material.shader = shader;
+        gameObjectBack.layer = TrianglesLayer;
+
     }
 
     public static Vector3 TransformPoint(Vector3 vertex, float moveCoef)

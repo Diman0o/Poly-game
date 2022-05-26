@@ -22,7 +22,15 @@ class LevelPass(BaseModel):
     accountId: str
     levelName: str
     
+    class Config:
+        orm_mode = True
+        
 
+class Level(BaseModel):
+    id: int
+    authorId: str
+    data: str
+    
     class Config:
         orm_mode = True
 
