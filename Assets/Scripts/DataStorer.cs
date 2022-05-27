@@ -37,10 +37,14 @@ public class DataStorer
 
     public static void updateLevelButtons()
     {
-        //var levelsContent = GameObject.FindGameObjectWithTag("LevelsContent");
+        var levels = GameObject.FindGameObjectsWithTag("Level");
+        updateGivenLevelButtons(levels);
+    }
+
+    public static void updateGivenLevelButtons(GameObject[] levels)
+    {
         Sprite notPassedSprite = Resources.Load<Sprite>("Previews/QuestionMark");
 
-        var levels = GameObject.FindGameObjectsWithTag("Level");
         foreach (var level in levels)
         {
             string levelId = level.GetComponentInChildren<Text>().text;
@@ -56,9 +60,6 @@ public class DataStorer
             {
                 preview.sprite = notPassedSprite;
             }
-
-            //var newLevel = GameObject.Instantiate(level);
-            //newLevel.transform.parent = levelsContent.transform;
         }
     }
 

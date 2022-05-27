@@ -126,6 +126,7 @@ public class Menu : MonoBehaviour
         _panelCustomLevels.SetActive(true);
         PanelsManager.panelMainMenuIsActive = false;
         _panelMainMenu.SetActive(PanelsManager.panelMainMenuIsActive);
+        ServerLevelGetter.updateServerLevels();
     }
     public void CloseLibrary()
     {

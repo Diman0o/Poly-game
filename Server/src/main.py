@@ -84,7 +84,7 @@ def add_level(accountId: str = "", levelData: str = "", db: Session = Depends(ge
 def get_levels(db: Session = Depends(get_db)):
     response = []
     for (level, auth) in db.query(Level, Auth).filter(Level.authorId == Auth.innerId).all():
-        response.append(level.id + ";" + auth.login)
+        response.append(str(level.id) + ";" + auth.login)
     return ",".join(response)
 
 
