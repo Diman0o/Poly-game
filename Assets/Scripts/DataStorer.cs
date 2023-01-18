@@ -14,7 +14,7 @@ public class DataStorer
         PlayerPrefs.SetInt(levelDataPrefix + levelId, 1);
         if (!string.IsNullOrWhiteSpace(accountId))
         {
-            
+            //TODO:???
         }
     }
 
@@ -43,23 +43,36 @@ public class DataStorer
 
     public static void updateGivenLevelButtons(GameObject[] levels)
     {
-        Sprite notPassedSprite = Resources.Load<Sprite>("Previews/QuestionMark");
-
         foreach (var level in levels)
         {
-            string levelId = level.GetComponentInChildren<Text>().text;
-            var image = level.GetComponent<Image>();
-            Image preview = getPreviewImage(level, image);
-            Debug.Log($"Laevelname: {level.name}");
-            if (isLevelPast(levelId))
-            {
-                Sprite passedSprite = getPassedSprite(level.name);
-                preview.sprite = passedSprite;
-            }
-            else
-            {
-                preview.sprite = notPassedSprite;
-            }
+            updateLevelButton(level, "main");
+        }
+    }
+ 
+    public static void updateLevelButton(GameObject level, string levelMode)
+    {
+        Sprite notPassedSprite = Resources.Load<Sprite>("Previews/QuestionMark");
+
+        string levelId;
+        if (levelMode == "main")
+        {
+            levelId = level.GetComponentInChildren<Text>().text;
+        }
+        else
+        {
+            levelId = level.GetComponent<LevelsButtonsManager>().levelId;
+        }
+        var image = level.GetComponent<Image>();
+        Image preview = getPreviewImage(level, image);
+        Debug.Log($"Laevelname: {level.name}");
+        if (isLevelPast(levelId))
+        {
+            Sprite passedSprite = getPassedSprite(level.name);
+            preview.sprite = passedSprite;
+        }
+        else
+        {
+            preview.sprite = notPassedSprite;
         }
     }
 

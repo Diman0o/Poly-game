@@ -22,7 +22,6 @@ public class LevelLoader : MonoBehaviour
 
     public static void DrawTriangle(Vector3 vertex0, Vector3 vertex1, Vector3 vertex2, Color triangleColor)
     {
-
         GameObject gameObject = new GameObject("Mesh", typeof(MeshFilter), typeof(MeshRenderer));
         GameObject gameObjectBack = new GameObject("Mesh", typeof(MeshFilter), typeof(MeshRenderer));
 
@@ -38,7 +37,6 @@ public class LevelLoader : MonoBehaviour
         gameObjectBack.GetComponent<MeshRenderer>().material.color = triangleColor;
         gameObjectBack.GetComponent<MeshRenderer>().material.shader = shader;
         gameObjectBack.layer = TrianglesLayer;
-
     }
 
     public static Vector3 TransformPoint(Vector3 vertex, float moveCoef)
@@ -52,7 +50,15 @@ public class LevelLoader : MonoBehaviour
     {
         targetPoint = new Vector3(0, 0, CameraRotationAround.zoom);
 
-        LevelData levelData = DataReader.ReadLevel();
+        LevelData levelData;
+        if (LevelsButtonsManager.levelMode == "main")
+        {
+            levelData = DataReader.ReadLevel();
+        }
+        else
+        {
+            levelData = DataReader.ParseTextToLevelData(LevelsButtonsManager.levelData);
+        }
         startRotation = levelData.startRotation;
         List<TriangleData> triangleDatas = levelData.triangleDatas;
 

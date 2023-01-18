@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class ServerLevelGetter : MonoBehaviour
 {
@@ -16,9 +17,12 @@ public class ServerLevelGetter : MonoBehaviour
         foreach (string levelId in levelIds)
         {
             var newLevel = Instantiate(levelTemplate);
-            newLevel.GetComponent<CustomLevelsButtonManager>().levelId = levelId;
+            newLevel.GetComponent<LevelsButtonsManager>().levelId = levelId;
+            string authorName = new string("undefined");
+            customLevelAuthors.TryGetValue(levelId, out authorName);
+            newLevel.GetComponentInChildren<Text>().text = authorName;
             newLevel.transform.SetParent(customLevelsContent.transform);
-
+            DataStorer.updateLevelButton(newLevel, "custom");
         }
     }
 

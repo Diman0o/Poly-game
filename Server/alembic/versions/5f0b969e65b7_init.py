@@ -25,7 +25,12 @@ def upgrade():
     'auth',
     sa.Column('login', sa.String, primary_key=True),
     sa.Column('hash', sa.String, nullable=False),
-    sa.Column('innerId', sa.String, sa.ForeignKey("account.id"), nullable=False))
+    sa.Column(
+        'innerId',
+        sa.String,
+        sa.ForeignKey("account.id"),
+        nullable=False)
+    )
 
 
 def downgrade():

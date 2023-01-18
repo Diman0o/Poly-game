@@ -14,9 +14,16 @@ public class GameMenu : MonoBehaviour
 
     public void ExitLevel()
     {
-        DataStorer.updateLevelButtons();
         PanelsManager.panelMainMenuIsActive = false;
-        PanelsManager.panelLevelsIsActive = true;
+
+        if (LevelsButtonsManager.levelMode == "main")
+        {
+            PanelsManager.panelLevelsIsActive = true;
+        }
+        else
+        {
+            PanelsManager.panelCustomLevelsIsActive = true;
+        }
         SceneManager.LoadScene(_menuSceneBuildIndex);
     }
 }

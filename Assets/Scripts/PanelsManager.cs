@@ -12,4 +12,5 @@ public class PanelsManager : MonoBehaviour
     public static bool panelGameIsActive = false;
     public static bool panelEndGameIsActive = false;
 
+    public static bool panelCustomLevelsIsActive = false;
 }

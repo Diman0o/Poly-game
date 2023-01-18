@@ -31,12 +31,15 @@ public class Menu : MonoBehaviour
 
     public void Start()
     {
-        DataStorer.updateLevelButtons();
+        //TODO: fix level passed update
         login.text = DataStorer.login;
         _panelMainMenu.SetActive(PanelsManager.panelMainMenuIsActive);
         _panelLevels.SetActive(PanelsManager.panelLevelsIsActive);
         _panelSettings.SetActive(PanelsManager.panelSettingsIsActive);
         _panelSettings.SetActive(PanelsManager.panelLogInAndSignUpIsActive);
+        _panelCustomLevels.SetActive(PanelsManager.panelCustomLevelsIsActive);
+        ServerLevelGetter.updateServerLevels();
+        DataStorer.updateLevelButtons();
     }
 
     public void OnLogInPressed()

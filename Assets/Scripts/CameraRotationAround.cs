@@ -57,7 +57,16 @@ public class CameraRotationAround : MonoBehaviour
 				string[][] queryParams = new string[][] { new string[] { "accountId", DataStorer.accountId }, new string[] { "levelName", LevelsButtonsManager.levelNumber} };
 				StartCoroutine(WebRequest.ProcessRequest("pass_level", queryParams, DataStorer.processSaveLevelAsPastOnServer));
 			}
-			DataStorer.saveLevelAsPast(LevelsButtonsManager.levelNumber); 
+			string levelId;
+			if (LevelsButtonsManager.levelMode == "main")
+			{
+				levelId = LevelsButtonsManager.levelNumber;
+			}
+			else
+            {
+				levelId = LevelsButtonsManager.lastCustomLevelId;
+            }
+			DataStorer.saveLevelAsPast(levelId);
 			isLevelPassed = true;
 			PanelsManager.panelGameIsActive = false;
 			_panelGame.SetActive(PanelsManager.panelGameIsActive);
@@ -97,6 +106,7 @@ public class CameraRotationAround : MonoBehaviour
 
 	void playMoveAnimation()
     {
+		float animationSpeed = 0.07f;
 		if (!isMoveAnimationPlayed)
 		{
 			Vector3 direction = (offset - transform.position);
@@ -115,6 +125,7 @@ public class CameraRotationAround : MonoBehaviour
 
 	void playRotateAnimation()
     {
+		float animationSpeed = 0.1f;
 		if (!isRotateAnimationPlayed)
 		{
 			Vector3 worldUp = Vector3.up.normalized;

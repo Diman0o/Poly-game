@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using UnityEditor;
+//using UnityEditor;
 using System;
 using System.IO;
 
@@ -18,7 +18,8 @@ public class ServerLevelAdder : MonoBehaviour
             return;
         }
 
-        string filepath = EditorUtility.OpenFilePanel("Choose file to load on server", "", "txt");
+        //string filepath = EditorUtility.OpenFilePanel("Choose file to load on server", "", "txt");
+        string filepath = "";
         filepathInfo.text = $"{filepath}";
         Debug.Log(filepath);
         if (string.IsNullOrWhiteSpace(filepath))

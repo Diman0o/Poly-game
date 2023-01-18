@@ -66,6 +66,7 @@ public class DataReader
 
     static Vector3 parseFirstLine(string firstLine)
     {
+        Debug.Log($"First line: {firstLine}");
         string[] startRotationStrings = firstLine.Split(",");
         return new Vector3(
             float.Parse(startRotationStrings[0], CultureInfo.InvariantCulture.NumberFormat),
